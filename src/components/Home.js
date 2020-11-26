@@ -1,12 +1,12 @@
 import React from "react";
-import DayEventsCard from "./DayEventsCard";
+import DayEventsCard from "./DateInfoCard";
 
 
 const Home = () => {
   return (
     <div>
       <h2>Home</h2>
-      <DayEventsCard></DayEventsCard>
+      <DateInfoCard />
     </div>
   );
 };
