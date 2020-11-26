@@ -2,6 +2,7 @@ import './App.css';
 import React from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import Home from "./components/Home";
+import ReadEvent from "./components/ReadEvent";
 
 const CreateEvent = () => (
   <div>
@@ -36,7 +37,8 @@ export default function App() {
         <Route exact path="/"><Home /></Route>
         <Route path="/createEvent"><CreateEvent /></Route>
         <Route path="/readProfile"><Profile /></Route>
+        <Route path="/readEvent/:id"><ReadEvent /></Route>
       </Switch>
     </div>
   );
-}
+};
