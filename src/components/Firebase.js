@@ -16,3 +16,5 @@ const config = {
 
   // Followed this guide to add Firebase to React app: https://medium.com/get-it-working/get-googles-firestore-working-with-react-c78f198d2364
   // Link to Firebase project page: https://console.firebase.google.com/u/0/project/gift-picker-app-1b88e/overview
+
+  

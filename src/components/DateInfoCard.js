@@ -1,10 +1,12 @@
 import React from "react";
 import { Link, Route, useParams, useRouteMatch } from "react-router-dom";
+import { fsFunc } from "../App.js";
 
 const DateInfoCard = () => {
 
     const selectedDate = Date();
 
+    // Write function that returns this (id and name)
     const eventsThatDay = [{id: '500', name: 'five-hundred'}];
 
     const linkList = eventsThatDay.map((event) => {

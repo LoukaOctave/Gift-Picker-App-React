@@ -1,6 +1,5 @@
 import React from "react";
-import DayEventsCard from "./DateInfoCard";
-
+import DateInfoCard from "./DateInfoCard";
 
 const Home = () => {
   return (

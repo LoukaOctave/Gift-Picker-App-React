@@ -1,14 +1,14 @@
 import './App.css';
 import React from "react";
 import { Link, Route, Switch } from "react-router-dom";
+import firebase from "./components/Firebase";
 import Home from "./components/Home";
+import CreateEvent from "./components/CreateEvent";
 import ReadEvent from "./components/ReadEvent";
+import { FirestoreFunctions } from "./firestore.js";
 
-const CreateEvent = () => (
-  <div>
-    <h2>CreateEvent</h2>
-  </div>
-);
+export let fsFunc = new FirestoreFunctions();
+export const db = firebase.firestore();
 
 const Profile = () => (
   <div>
