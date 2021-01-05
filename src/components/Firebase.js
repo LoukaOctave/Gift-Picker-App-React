@@ -12,6 +12,9 @@ const config = {
   // Initialize Firebase
   firebase.initializeApp(config);
 
+  // Set options for Firestore
+  firebase.firestore().settings({ timestampsInSnapshots: true });
+
   export default firebase;
 
   // Followed this guide to add Firebase to React app: https://medium.com/get-it-working/get-googles-firestore-working-with-react-c78f198d2364
