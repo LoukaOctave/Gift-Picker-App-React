@@ -1,7 +1,7 @@
 import React from 'react';
 import M from "materialize-css";
-import { eventTypes } from "../data.js";
-import db from "../App.js";
+import { eventTypes, formSelectPlaceholder } from "../data.js";
+import firebase from "./Firebase.js";
 
 class CreateEvent extends React.Component {
     constructor() {
@@ -12,45 +12,100 @@ class CreateEvent extends React.Component {
             date: "",
             start: "",
             end: "",
-            type: "",
-            description: ""
+            type: formSelectPlaceholder,
+            description: "",
+            status: ""
         };
+        
     }
 
-    createEvent = e => {
-        e.preventDefault();
-        // Check if inputs are all non-empty
-        // Add rule for AllDay events not needing start and end
-        // Add rule where start can't be greater than end
-        db.settings({
-          timestampsInSnapshots: true
+    // Performs data checks
+    checkForm() {
+        let emptyFields = 0;
+        let passCheck = true;
+        let warning;
+        for (const [key, value] of Object.entries(this.state)) { // Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+            if (value === "" && key !== "status") {
+                if (key === "start" || key === "end") {
+                    if (this.state.allDay === false) { // Start and end are only counted when allDay isn't checked
+                        warning = `${key} time`;
+                        emptyFields++;
+                    }
+                }
+                else {
+                    warning = key; 
+                    emptyFields++;
+                }
+            }
+            if (key === "type" && value === formSelectPlaceholder) { // Type needs to be something else than "Choose your option" (=formSelectPlaceholder)
+                warning = key;
+                emptyFields++;
+            }
+        }
+        if (emptyFields > 0) {
+            passCheck = false;
+            warning = `Please pick a ${warning}`
+            if (emptyFields > 1) { warning = "Please fill in all the fields" }
+        } else if (this.state.allDay === false) {
+            let start = this.state.start.split(":");
+            let end = this.state.end.split(":");
+            if (start[0] === end[0]) { // Start hour equal to end hour
+                if(start[1] >= end[1]) { // Start minute greater than or equal to end minute
+                    passCheck = false;
+                    warning = "End time must be greater than start time";
+                }
+            }
+            if (start[0] >= end[0]) {// Start hour greater than or equal to end hour
+                passCheck = false;
+                warning = "End time must be greater than start time";
+            }
+        }
+        this.setState({
+            status: warning
         });
-        const userRef = db.collection("Events").add({
-            title: this.state.title,
-            allDay: this.state.allDay,
-            date: this.state.date,
-            start: this.state.start,
-            end: this.state.end,
-            type: this.state.type,
-            description: this.state.description
-        });  
-        this.setState({ // Resets the form to all of its original values
+        return passCheck;
+    }
+
+    // Resets the form to all of its original values
+    resetState() {
+        this.setState({
             title: "",
             allDay: false,
             date: "",
             start: "",
             end: "",
-            type: "",
+            type: formSelectPlaceholder, // Does not actually reset the select to this value. Look for fix.
             description: ""
         });
-      };
+    }
 
+    createEvent = e => {
+        e.preventDefault();
+        if (this.checkForm() === true) {
+            firebase.firestore().collection("Events").add({
+                title: this.state.title,
+                allDay: this.state.allDay,
+                date: this.state.date,
+                start: this.state.start,
+                end: this.state.end,
+                type: this.state.type,
+                description: this.state.description
+            });
+            this.setState({
+                status: "Event created succesfully"
+            });
+            this.resetState();
+        }
+    }
+
+    // Updates the state of the component according to changes brought to the form input fields
     updateInput = e => {
         this.setState({
             [e.target.name]: e.target.value
         });
     }
 
+    // Updates the state of the component according to changes brought to the form checkbox input field(s)
     updateAllDay = e => {
         this.setState({
             [e.target.name]: e.target.checked
@@ -64,7 +119,6 @@ class CreateEvent extends React.Component {
     }
 
     render() {
-        console.log("test");
         const options = eventTypes.map((option) => {
             return (
                 <option name={option.name}
@@ -116,10 +170,10 @@ class CreateEvent extends React.Component {
                     />
                     <div className="input-field col s12">
                         <select name="type"
-                            defaultValue="Choose your option"
+                            defaultValue={this.state.type}
                             onChange={this.updateInput}
                         >
-                            <option value="Choose your option" disabled={true}>Choose your option</option>
+                            <option value={this.state.type} disabled={true}>Choose your option</option>
                             {options}
                         </select>
                         <label>Type</label>
@@ -132,6 +186,7 @@ class CreateEvent extends React.Component {
                     />
                                     
                     <button type="submit">Submit</button>
+                    <p className="status-message">{this.state.status}</p>
                 </form>
             </div>
         );
