@@ -34,7 +34,7 @@ export default function App() {
 
       <Switch>
         <Route exact path="/"><Home /></Route>
-        <Route path="/createEvent"><CreateEvent /></Route>
+        <Route exact path="/createEvent"><CreateEvent /></Route>
         <Route path="/readProfile"><Profile /></Route>
         <Route path="/readEvent/:id"><ReadEvent /></Route>
       </Switch>
