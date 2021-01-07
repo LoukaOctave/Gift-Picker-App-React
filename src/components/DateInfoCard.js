@@ -1,28 +1,51 @@
-import React from "react";
-import { Link, Route, useParams, useRouteMatch } from "react-router-dom";
-import { fsFunc } from "../App.js";
+import React, {useState, useEffect} from "react";
+import { Link   } from "react-router-dom";
+import firebase from "./Firebase.js";
 
 const DateInfoCard = () => {
 
-    const selectedDate = Date();
+    const [events, setEvents] = useState([{title:"sucj", id:"fdfdfdf"}, {title:"FUBEK", id: "ueifbe"}]);
 
-    // Write function that returns this (id and name)
-    const eventsThatDay = [{id: '500', name: 'five-hundred'}];
+    
 
-    const linkList = eventsThatDay.map((event) => {
-        return (
-            <li key={event.id}>
-                <Link to={`readEvent/${event.id}`}>{event.name}</Link>
-            </li>
-        );
-    });
+    const docsRef = firebase.firestore().collection("Events");
+    const fetchEvents = async() => {
+        const response = docsRef;
+        const data = await response.get();
+        data.docs.forEach(event => {
+            setEvents([...events, {...event.data(), id: event.id}]); // Doesn't work if you try to add multiple events to the state
+        })
+    }
+
+    useEffect(() => { // TODO: Fix this, because it keeps giving a warning
+        fetchEvents();
+    }, [])
 
     return (
-        <div>
-            <h3>{selectedDate.toString()}</h3>    
-            <ul>{linkList}</ul>
+        <div className="row">
+            <div className="col s12 m6">
+                <div className="card blue-grey darken-1">
+                    <div className="card-content white-text">
+                        <span className="card-title">{Date()}</span>
+                        <p>{Date()}</p>
+                    </div>
+                    <div className="card-action">
+                        <ul>
+                            {
+                                events && events.map(event=>{
+                                    return(
+                                        <li key={event.id}>
+                                            <Link to={`readEvent/${event.id}`}>{event.title}</Link>
+                                        </li>
+                                    );
+                                })
+                            }   
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     );
-};
+}
 
 export default DateInfoCard;
