@@ -16,7 +16,6 @@ class CreateEvent extends React.Component {
             description: "",
             status: ""
         };
-        
     }
 
     // Performs data checks
@@ -191,5 +190,6 @@ class CreateEvent extends React.Component {
             </div>
         );
     }
-   }
+}
+
 export default CreateEvent;
