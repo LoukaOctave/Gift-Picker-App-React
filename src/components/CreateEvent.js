@@ -2,6 +2,7 @@ import React from 'react';
 import M from "materialize-css";
 import { eventTypes, formSelectPlaceholder } from "../data.js";
 import firebase from "./Firebase.js";
+import { currentDateToYyyyMmDd } from "../functions.js";
 
 class CreateEvent extends React.Component {
     constructor() {
@@ -9,7 +10,7 @@ class CreateEvent extends React.Component {
         this.state = {
             title: "",
             allDay: false,
-            date: "",
+            date: currentDateToYyyyMmDd(),
             start: "",
             end: "",
             type: formSelectPlaceholder,
@@ -17,6 +18,8 @@ class CreateEvent extends React.Component {
             status: ""
         };
     }
+
+    
 
     // Performs data checks
     checkForm() {
@@ -70,10 +73,10 @@ class CreateEvent extends React.Component {
         this.setState({
             title: "",
             allDay: false,
-            date: "",
+            date: "2000-12-05",
             start: "",
             end: "",
-            type: formSelectPlaceholder, // Does not actually reset the select to this value. Look for fix.
+            type: formSelectPlaceholder, // Does not actually reset the <select/> to this value. Look for fix.
             description: ""
         });
     }
@@ -133,12 +136,16 @@ class CreateEvent extends React.Component {
             <div>
                 <h2>Create Event</h2>
                 <form onSubmit={this.createEvent}>
-                    <input name="title" 
-                        type="text" 
-                        placeholder="Event title..."
-                        onChange={this.updateInput}
-                        value={this.state.title}
-                    />
+                    
+                    <div>
+                        <label>Title</label>
+                        <input name="title" 
+                            type="text" 
+                            placeholder="Event title..."
+                            onChange={this.updateInput}
+                            value={this.state.title}
+                        />
+                    </div>
                     <div className="switch">
                         <label>
                         All Day?
@@ -150,24 +157,34 @@ class CreateEvent extends React.Component {
                         <span className="lever"></span>
                         </label>
                     </div>           
-                    <input name="date"
-                        type="date"
-                        onChange={this.updateInput}
-                        value={this.state.date}
-                    />
-                    <input name="start"
-                        type="time"
-                        onChange={this.updateInput}
-                        value={this.state.start}
-                        disabled={this.state.allDay ? true : false}
-                    />
-                    <input name="end"
-                        type="time"
-                        onChange={this.updateInput}
-                        value={this.state.end}
-                        disabled={this.state.allDay ? true : false}
-                    />
-                    <div className="input-field col s12">
+                    <div>
+                        <label>Date</label>
+                        <input name="date"
+                            type="date"
+                            onChange={this.updateInput}
+                            value={this.state.date}
+                        />
+                    </div>
+                    <div>
+                        <label>Start time</label>
+                        <input name="start"
+                            type="time"
+                            onChange={this.updateInput}
+                            value={this.state.start}
+                            disabled={this.state.allDay ? true : false}
+                        />
+                    </div>
+                    <div>
+                        <label>End time</label>
+                        <input name="end"
+                            type="time"
+                            onChange={this.updateInput}
+                            value={this.state.end}
+                            disabled={this.state.allDay ? true : false}
+                        />
+                    </div>
+                    <div>
+                        <label>Type</label>
                         <select name="type"
                             defaultValue={this.state.type}
                             onChange={this.updateInput}
@@ -175,15 +192,16 @@ class CreateEvent extends React.Component {
                             <option value={this.state.type} disabled={true}>Choose your option</option>
                             {options}
                         </select>
-                        <label>Type</label>
                     </div>
-                    <input name="description"
-                        type="text"
-                        placeholder="Description..."
-                        onChange={this.updateInput}
-                        value={this.state.description}
-                    />
-                                    
+                    <div>
+                        <label>Description</label>
+                        <input name="description"
+                            type="text"
+                            placeholder="Description..."
+                            onChange={this.updateInput}
+                            value={this.state.description}
+                        />
+                    </div> 
                     <button type="submit">Submit</button>
                     <p className="status-message">{this.state.status}</p>
                 </form>
