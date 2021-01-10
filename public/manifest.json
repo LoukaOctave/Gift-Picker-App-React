@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Gift Picker App",
+  "name": "Gift Picker App",
   "icons": [
     {
       "src": "favicon.ico",
