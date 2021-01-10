@@ -1,0 +1,4 @@
+cd 'C:\Smart Apps\React\gift-picker-app-react'
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+npm run build
+firebase deploy
