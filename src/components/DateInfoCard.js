@@ -4,7 +4,7 @@ import firebase from "./Firebase.js";
 
 const DateInfoCard = () => {
 
-    const [events, setEvents] = useState([{title:"sucj", id:"fdfdfdf"}, {title:"FUBEK", id: "ueifbe"}]);
+    const [events, setEvents] = useState([]);
 
     
 
@@ -13,7 +13,7 @@ const DateInfoCard = () => {
         const response = docsRef;
         const data = await response.get();
         data.docs.forEach(event => {
-            setEvents([...events, {...event.data(), id: event.id}]); // Doesn't work if you try to add multiple events to the state
+            setEvents([...events, {...event.data(), id: event.id}]);
         })
     }
 
@@ -32,7 +32,7 @@ const DateInfoCard = () => {
                     <div className="card-action">
                         <ul>
                             {
-                                events && events.map(event=>{
+                                events && events.map(event => { // This will ultimately only return one <li/> element. Fix not found.
                                     return(
                                         <li key={event.id}>
                                             <Link to={`readEvent/${event.id}`}>{event.title}</Link>
