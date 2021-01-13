@@ -67,12 +67,12 @@ const UpdateEvent = () => {
         e.preventDefault();
         const checkResults = checkForm(event);
         if (checkResults.boolean === true) {
-            firebase.firestore().collection("Events").add({
+            firebase.firestore().collection("Events").doc(event.id).set({
                 title: event.title,
                 allDay: event.allDay,
                 date: event.date,
-                start: event.start,
-                end: event.end,
+                start: event.allDay ? "" : event.start,
+                end: event.allDay ? "" : event.end,
                 type: event.type,
                 description: event.description
             })
