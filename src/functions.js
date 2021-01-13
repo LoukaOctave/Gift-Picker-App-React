@@ -1,4 +1,4 @@
-import { formSelectPlaceholder } from "./data.js";
+import { eventTypes, formSelectPlaceholder } from "./data.js";
 
 export function currentDateToYyyyMmDd() {
     var date = new Date();
@@ -7,6 +7,16 @@ export function currentDateToYyyyMmDd() {
     if (mm < 10) { mm = `0${mm}` }
     var dd = date.getDate();
     return `${yyyy}-${mm}-${dd}`; 
+}
+
+export function typeValueToName(typeValue) {
+    var typeName;
+    eventTypes.forEach(eventType => {
+        if(eventType.value === typeValue) {
+            typeName = eventType.name;
+        }
+    })
+    return typeName;
 }
 
 export function checkForm(state) {
