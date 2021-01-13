@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useParams, Link } from "react-router-dom";
+import { typeValueToName } from "../functions.js";
 import firebase from "./Firebase.js";
 
 const ReadEvent = () => {
@@ -8,12 +9,12 @@ const ReadEvent = () => {
 
     useEffect(() => { // TODO: Fix this, because it keeps giving a warning
         fetchEvent();
-    }, [])
+    }, []);
 
     const docRef = firebase.firestore().collection("Events").doc(useParams().id);
     const fetchEvent = async() => {
         const response = docRef;
-        await response.get().then(function(doc) {
+        await response.get().then((doc) => {
             if (doc.exists) {
               setEvent({
                 id: doc.id,
@@ -27,20 +28,21 @@ const ReadEvent = () => {
                 found: true
             })
             } else {
-              // doc.data() will be undefined in this case
-              setEvent({
-                fetched: true,
-                found: false,
-                errorMessage: "Event does not exist"
-            })
+                // doc.data() will be undefined in this case
+                setEvent({
+                    fetched: true,
+                    found: false,
+                    errorMessage: "Event does not exist"
+                })
             }
-          }).catch(function(error) {
+        }).catch((error) => {
             setEvent({
                 fetched: true,
                 found: false,
                 errorMessage: `Error getting event data: ${error}`
             })
-          });
+        });
+    }
     }
 
     return (
