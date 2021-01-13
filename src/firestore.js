@@ -1,6 +1,6 @@
-import firebase from "./components/Firebase.js";
+//import firebase from "./components/Firebase.js";
 
-const db = firebase.firestore();
+//const db = firebase.firestore();
 export class FirestoreFunctions {
   
   
