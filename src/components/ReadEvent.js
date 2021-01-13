@@ -16,17 +16,18 @@ const ReadEvent = () => {
         const response = docRef;
         await response.get().then((doc) => {
             if (doc.exists) {
-              setEvent({
-                id: doc.id,
-                title: doc.data().title,
-                date: doc.data().date,
-                start: doc.data().start,
-                end: doc.data().end,
-                type: doc.data().type,
-                description: doc.data().description,
-                fetched: true,
-                found: true
-            })
+                setEvent({
+                    id: doc.id,
+                    title: doc.data().title,
+                    allDay: doc.data().allDay,
+                    date: doc.data().date,
+                    start: doc.data().start,
+                    end: doc.data().end,
+                    type: doc.data().type,
+                    description: doc.data().description,
+                    fetched: true,
+                    found: true
+                });
             } else {
                 // doc.data() will be undefined in this case
                 setEvent({
