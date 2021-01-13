@@ -44,6 +44,13 @@ const ReadEvent = () => {
             })
         });
     }
+
+    const eventTimes = (startOrEnd) => {
+        if (!event.allDay) {
+            return(
+                    <li className="collection-item"><div>{startOrEnd.charAt(0).toUpperCase() + startOrEnd.slice(1)}<span className="secondary-content">{event[startOrEnd]}</span></div></li>
+            );
+        }
     }
 
     return (
@@ -64,10 +71,12 @@ const ReadEvent = () => {
             <div className={(event.fetched && event.found) ? "" : "hide"}>
                 <ul className="collection with-header">
                     <li className="collection-header"><h4>{event.title}</h4></li>
-                    <li className="collection-item"><div>Date<span className="secondary-content">{event.date}</span></div></li>
-                    <li className="collection-item"><div>Start<span className="secondary-content">{event.start}</span></div></li>
-                    <li className="collection-item"><div>End<span className="secondary-content">{event.end}</span></div></li>
-                    <li className="collection-item"><div>Type<span className="secondary-content">{event.type}</span></div></li>
+                    <li className="collection-item"><div>Date<span className="secondary-content">{`${event.date} ${event.allDay ? "All Day" : ""}`}</span></div></li>
+                    {eventTimes("start")}
+                    {eventTimes("end")}
+                    <li className="collection-item"><div>Type<span className="secondary-content">
+                    {typeValueToName(event.type)}
+                    </span></div></li>
                     <li className="collection-item"><div>Description<span className="secondary-content">{event.description}</span></div></li>
                 </ul>
                 <div>
