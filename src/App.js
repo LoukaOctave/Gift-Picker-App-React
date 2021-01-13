@@ -46,7 +46,8 @@ export default function App() {
         <li href="/" className={(window.location.pathname === "/") ? "active" : ""} onClick={changeActiveTab}>
           <Link to="/"><i className="material-icons left">home</i>Home</Link>
         </li>
-        <li href="/createEvent/" className={(window.location.pathname === "/createEvent/") ? "active" : "" } onClick={changeActiveTab}><Link to="/createEvent/"><i className="material-icons left">add</i>Add</Link>
+        <li href="/createEvent/" className={(window.location.pathname === "/createEvent/") ? "active" : "" } onClick={changeActiveTab}>
+          <Link to="/createEvent/"><i className="material-icons left">add</i>Add</Link>
         </li>
         <li href="/readProfile/" className={(window.location.pathname === "/readProfile/") ? "active" : ""} onClick={changeActiveTab}>
           <Link to="/readProfile/"><i className="material-icons left">person</i>Profile</Link>
