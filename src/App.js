@@ -6,10 +6,6 @@ import Home from "./components/Home";
 import CreateEvent from "./components/CreateEvent";
 import ReadEvent from "./components/ReadEvent";
 import UpdateEvent from "./components/UpdateEvent";
-import { FirestoreFunctions } from "./firestore.js";
-
-// Create an instance of FirestoreFunctions
-export const fsFunc = new FirestoreFunctions();
 
 const Profile = () => (
   <div>
