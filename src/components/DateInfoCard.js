@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Link   } from "react-router-dom";
+import { Link } from "react-router-dom";
 import firebase from "./Firebase.js";
 
 const DateInfoCard = () => {
@@ -35,7 +35,7 @@ const DateInfoCard = () => {
                                 events && events.map(event => { // This will ultimately only return one <li/> element. Fix not found.
                                     return(
                                         <li key={event.id}>
-                                            <Link to={`readEvent/${event.id}`}>{event.title}</Link>
+                                            <Link to={`/readEvent/${event.id}`}>{event.title}</Link>
                                         </li>
                                     );
                                 })
