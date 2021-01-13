@@ -154,18 +154,25 @@ const UpdateEvent = () => {
                     <div>
                         <label>Type</label>
                         <select name="type"
-                            defaultValue={event.type}
+                            value={event.type}
                             onChange={updateInput}
                         >
-                            <option value={event.type} disabled={true}>{event.type}</option>
-                            {// TODO: Fix selected value
-                                eventTypes.map((option) => {
+                        <option id={event.type}
+                            name={event.type}
+                            key={event.type}
+                            value={event.type}
+                        >
+                            {typeValueToName(event.type)}
+                        </option>
+                            {
+                                eventTypes.map((eventType) => {
                                     return (
-                                        <option name={option.name}
-                                            key={option.name}
-                                            value={option.value}
+                                        <option id={eventType.value}
+                                            name={eventType.value}
+                                            key={eventType.value}
+                                            value={eventType.value}
                                         >
-                                            {option.name}
+                                            {eventType.name}
                                         </option>
                                     );
                                 })
@@ -181,11 +188,14 @@ const UpdateEvent = () => {
                             value={event.description}
                         />
                     </div> 
-                    <button type="submit">Submit</button>
+                    <button type="submit">Save Changes</button>
                     <p className="status-message">{event.status}</p>
                 </form>
+                {
+                /* Contains a button to return to the previous page. Will always be shown. */
+                }
                 <div>
-                    <Link to={`/readEvent/${event.id}`} className="waves-effect waves-light btn"><i className="material-icons left">arrow_back_ios</i>Back</Link>
+                    <Link id="back-button" to={`/readEvent/${event.id}`} className="waves-effect waves-light btn"><i className="material-icons left">arrow_back_ios</i>Back</Link>
                 </div>
             </div>
     );
