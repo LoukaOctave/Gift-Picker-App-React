@@ -7,7 +7,18 @@ import firebase from "./Firebase.js";
 
 const UpdateEvent = () => {
 
-    const [event, setEvent] = useState({fetched: false})
+    const [event, setEvent] = useState({
+        id: "",
+        title: "",
+        allDay: false,
+        date: "",
+        start: "",
+        end: "",
+        type: "",
+        description: "",
+        fetched: false,
+        found: false
+    })
 
     useEffect(() => { // TODO: Fix this, because it keeps giving a warning
         fetchEvent();
