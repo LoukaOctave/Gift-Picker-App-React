@@ -55,7 +55,10 @@ const ReadEvent = () => {
 
     return (
         <div>
-            <div className={!event.fetched ? "" : "hide"}>
+            {
+                /* Contains a loading animation. Will be visible until the event is fetched, regardless if an existing one has been found or not. */
+            }
+            <div className={event.fetched ? "hide" : ""}>
                 <div className="preloader-wrapper big active">
                     <div className="spinner-layer spinner-blue-only">
                     <div className="circle-clipper left">
@@ -68,6 +71,9 @@ const ReadEvent = () => {
                     </div>
                 </div>
             </div>
+            {
+                /* Contains the readable event data. Will be hidden until the event is fetched and found (this means valid/non-empty). */
+            }
             <div className={(event.fetched && event.found) ? "" : "hide"}>
                 <ul className="collection with-header">
                     <li className="collection-header"><h4>{event.title}</h4></li>
@@ -84,10 +90,16 @@ const ReadEvent = () => {
                     <a className="waves-effect waves-light btn"><i className="material-icons left">delete</i>Delete</a>
                 </div>
             </div>
+            {
+                /* Contains a 404 page with error message. Will be hidden until the event is fetched but no valid one is found (this means non-valid/empty OR there's a db error). */
+            }
             <div className={(event.fetched && !event.found) ? "" : "hide"}>
                 <h4>404: Event not found</h4>
                 <p>{event.errorMessage}</p>
             </div>
+            {
+                /* Contains a button to return to the previous page. Will always be shown. */
+            }
             <div>
                 <Link to="/" className="waves-effect waves-light btn"><i className="material-icons left">arrow_back_ios</i>Back</Link>
             </div>
