@@ -51,13 +51,14 @@ class CreateEvent extends React.Component {
         } else if (this.state.allDay === false) {
             let start = this.state.start.split(":");
             let end = this.state.end.split(":");
+            console.log(`${start[0]}:${start[1]} - ${end[0]}:${end[1]}`)
             if (start[0] === end[0]) { // Start hour equal to end hour
                 if(start[1] >= end[1]) { // Start minute greater than or equal to end minute
                     passCheck = false;
                     warning = "End time must be greater than start time";
                 }
             }
-            if (start[0] >= end[0]) {// Start hour greater than or equal to end hour
+            else if (start[0] > end[0]) { // Start hour greater than end hour
                 passCheck = false;
                 warning = "End time must be greater than start time";
             }
@@ -88,7 +89,7 @@ class CreateEvent extends React.Component {
                 title: this.state.title,
                 allDay: this.state.allDay,
                 date: this.state.date,
-                start: this.state.start,
+                start: this.state.start, // Adds start and end regardless of allDay
                 end: this.state.end,
                 type: this.state.type,
                 description: this.state.description
@@ -103,14 +104,16 @@ class CreateEvent extends React.Component {
     // Updates the state of the component according to changes brought to the form input fields
     updateInput = e => {
         this.setState({
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
+            status: ""
         });
     }
 
     // Updates the state of the component according to changes brought to the form checkbox input field(s)
     updateAllDay = e => {
         this.setState({
-            [e.target.name]: e.target.checked
+            [e.target.name]: e.target.checked,
+            status: ""
         });
     }
 
@@ -189,7 +192,7 @@ class CreateEvent extends React.Component {
                             defaultValue={this.state.type}
                             onChange={this.updateInput}
                         >
-                            <option value={this.state.type} disabled={true}>Choose your option</option>
+                            <option value={this.state.type} disabled={true}>{formSelectPlaceholder}</option>
                             {options}
                         </select>
                     </div>
