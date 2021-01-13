@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import M from "materialize-css";
 import { useParams, Link } from "react-router-dom";
-import { eventTypes, formSelectPlaceholder } from "../data.js";
-import { checkForm } from "../functions.js";
+import { eventTypes } from "../data.js";
+import { checkForm, typeValueToName } from "../functions.js";
 import firebase from "./Firebase.js";
 
 const UpdateEvent = () => {
@@ -30,29 +30,30 @@ const UpdateEvent = () => {
     const docRef = firebase.firestore().collection("Events").doc(useParams().id);
     const fetchEvent = async() => {
         const response = docRef;
-        await response.get().then(function(doc) {
+        await response.get()
+        .then((doc) => {
             if (doc.exists) {
-              setEvent({
-                id: doc.id,
-                title: doc.data().title,
-                allDay: doc.data().allDay,
-                date: doc.data().date,
-                start: doc.data().start,
-                end: doc.data().end,
-                type: doc.data().type,
-                description: doc.data().description,
-                fetched: true,
-                found: true
-            })
+                setEvent({
+                    id: doc.id,
+                    title: doc.data().title,
+                    allDay: doc.data().allDay,
+                    date: doc.data().date,
+                    start: doc.data().start,
+                    end: doc.data().end,
+                    type: doc.data().type,
+                    description: doc.data().description,
+                    fetched: true,
+                    found: true
+                })
             } else {
               // doc.data() will be undefined in this case
-              setEvent({
-                fetched: true,
-                found: false,
-                errorMessage: "Event does not exist"
-            })
+                setEvent({
+                    fetched: true,
+                    found: false,
+                    errorMessage: "Event does not exist"
+                })
             }
-          }).catch(function(error) {
+        }).catch((error) => {
             setEvent({
                 fetched: true,
                 found: false,
@@ -74,20 +75,17 @@ const UpdateEvent = () => {
                 end: event.end,
                 type: event.type,
                 description: event.description
-            });
-            setEvent({
-                ...event,
-                status: "Event created succesfully"
-            });
+            })
+            .then(() => {
+                    setEvent({ ...event, status: "Event updated succesfully" });
+                    document.getElementById("back-button").click()
+            }, (reject) => { setEvent({ ...event, status: reject }); })
         } else {
-            setEvent({
-                ...event,
-                status: checkResults.message
-            });
+            setEvent({ ...event, status: checkResults.message });
         }
     }
 
-    function updateInput(e) {
+    const updateInput = (e) => {
         setEvent({
             ...event,
             [e.target.name]: e.target.value,
@@ -95,7 +93,7 @@ const UpdateEvent = () => {
         });
     }
 
-    function updateAllDay(e) {
+    const updateAllDay = (e) => {
         setEvent({
             ...event,
             [e.target.name]: e.target.checked,
