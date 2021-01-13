@@ -89,8 +89,8 @@ class CreateEvent extends React.Component {
                 title: this.state.title,
                 allDay: this.state.allDay,
                 date: this.state.date,
-                start: this.state.start, // Adds start and end regardless of allDay
-                end: this.state.end,
+                start: this.state.allDay ? "" : this.state.start, // Only adds start if allDay is false
+                end: this.state.allDay ? "" : this.state.end, // Only adds end if allDay is false
                 type: this.state.type,
                 description: this.state.description
             });
@@ -205,7 +205,7 @@ class CreateEvent extends React.Component {
                             value={this.state.description}
                         />
                     </div> 
-                    <button type="submit">Submit</button>
+                    <button type="submit">Create</button>
                     <p className="status-message">{this.state.status}</p>
                 </form>
             </div>
