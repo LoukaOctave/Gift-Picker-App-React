@@ -20,13 +20,13 @@ reportWebVitals();
 //#region TO-DO
 
   //TODO: Login
-  //TODO: Profile (with user URLs)
-  //TODO: Settings
-  //TODO: Make UI more attractive
-  //TODO: Indicate when app is offline
+  //TODO: Profile (with user URLs -> QR, copy to clipboard)
   //TODO: Wishlists
-  //TODO: Make use of an API that retrieves gift suggestions
+  //TODO: Settings
+  //TODO: Indicate when app is offline
   //TODO: Make use of an API that retrieves holiday data
+  //(TODO: Make use of an API that retrieves gift suggestions)
+  //TODO: Make UI more attractive
 
   //TODO: Replace /src/logo.svg with image from https://pixabay.com/vectors/present-box-dole-favor-gift-150291/
 
