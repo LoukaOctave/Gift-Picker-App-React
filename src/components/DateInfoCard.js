@@ -6,15 +6,16 @@ const DateInfoCard = () => {
 
     const [events, setEvents] = useState([]);
 
-    
+    const tempEvents = [];
 
     const docsRef = firebase.firestore().collection("Events");
     const fetchEvents = async() => {
         const response = docsRef;
         const data = await response.get();
         data.docs.forEach(event => {
-            setEvents([...events, {...event.data(), id: event.id}]);
+            tempEvents.push({...event.data(), id: event.id});
         })
+        setEvents([...tempEvents]);
     }
 
     useEffect(() => { // TODO: Fix this, because it keeps giving a warning
@@ -31,15 +32,7 @@ const DateInfoCard = () => {
                     </div>
                     <div className="card-action">
                         <ul>
-                            {
-                                events && events.map(event => { // This will ultimately only return one <li/> element. Fix not found.
-                                    return(
-                                        <li key={event.id}>
-                                            <Link to={`/readEvent/${event.id}`}>{event.title}</Link>
-                                        </li>
-                                    );
-                                })
-                            }   
+                            {events.map(event => (<li key={event.id}><Link to={`/readEvent/${event.id}`}>{event.title}</Link></li>))}   
                         </ul>
                     </div>
                 </div>
